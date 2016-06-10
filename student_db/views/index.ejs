@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1> 
+    <form action="/" method="POST">
+      <label for="firstname">First Name
+      <input type="text" placeholder="First Name" name="firstname">
+      <label for="lastname">Last Name
+      <input type="text" placeholder="Last Name" name="lastname">
+      <input type="submit" name="search" value="Search">
+    </form>
+    <ul class="students">
+      <% if (students) { %>
+        <% for(var i=0; i<students.length; i++) {%>
+        <li class="student">
+          <span><%= students[i].first %></span>
+          <span><%= students[i].last %></span>
+        </li>
+        <% } %>
+      <% } else { %>
+        <p>No student matches found</p>
+      <% } %>
+    </ul>
+
+  </body>
+</html>
