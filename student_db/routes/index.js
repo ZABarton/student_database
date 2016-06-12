@@ -30,10 +30,13 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next) {
 	var first = (req.body.firstname);
 	var last = (req.body.lastname);
-	var cursor = db.collection('students').find({}, {'students': {$elemMatch:{'first':first}}}).toArray(function(err, results){
-		console.log("Here are the results")
-		console.log(results)
-		var students = (results[0]["students"])
+	var cursor = db.collection('students').aggregate([
+      {"$unwind":"$students"},
+      {"$match": {"students.first": {$regex: first}}}
+    ]).toArray(function(err, results){
+		  console.log("Here are the results")
+		  console.log(results.length)
+		  var students = results;
 		res.render('index', { title: 'Search Results', students: students});
 	});
 });
