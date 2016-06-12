@@ -16,11 +16,13 @@ MongoClient.connect('mongodb://' + process.env.DBUSER + ':' + process.env.DBPASS
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  var cursor = db.collection('students').find().toArray(function(err, results){
+  var cursor = db.collection('students').aggregate([
+      {"$unwind":"$students"}
+    ]).toArray(function(err, results){
     if (err) {
       console.log("error encountered")
     } else {
-      var students = (results[0]["students"])
+      var students = results
       res.render('index', { title: 'Student Database', students: students});
     }
   });
@@ -32,7 +34,8 @@ router.post('/', function(req, res, next) {
 	var last = (req.body.lastname);
 	var cursor = db.collection('students').aggregate([
       {"$unwind":"$students"},
-      {"$match": {"students.first": {$regex: first}}}
+      {"$match": {"students.first": {$regex: first, $options: 'i'}}},
+      {"$match": {"students.last": {$regex: last, $options: 'i'}}}
     ]).toArray(function(err, results){
 		  console.log("Here are the results")
 		  console.log(results.length)
