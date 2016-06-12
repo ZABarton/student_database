@@ -17,8 +17,8 @@
       <% if (students) { %>
         <% for(var i=0; i<students.length; i++) {%>
         <li class="student">
-          <span><%= students[i].first %></span>
-          <span><%= students[i].last %></span>
+          <span><%= students[i].students.first %></span>
+          <span><%= students[i].students.last %></span>
         </li>
         <% } %>
       <% } else { %>
