@@ -45,3 +45,18 @@ router.post('/', function(req, res, next) {
 });
 
 module.exports = router;
+
+router.get('/detail', function(req, res, next){
+  console.log(req.query);
+  var first = (req.query.first);
+  var last = (req.query.last);
+  var cursor = db.collection('students').aggregate([
+    {"$unwind":"$students"},
+    {"$match": {"students.first": first}},
+    {"$match": {"students.last": last}}
+    ]).toArray(function(err, results){
+    var student = results;
+    console.log(student);
+  res.render('detail', { title: 'Detailed Student View', student: student });
+  });
+});

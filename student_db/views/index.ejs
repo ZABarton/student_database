@@ -35,6 +35,13 @@
           <td><%= students[i].students.first %></td>
           <td><%= students[i].students.last %></td>
           <td><%= gpa(students[i].students.studentClasses) %></td>
+          <td>
+            <form action="/detail" method="get">
+            <input type="hidden" name="first" value=<%= students[i].students.first %>>
+            <input type="hidden" name="last" value=<%= students[i].students.last %>>
+            <input type="submit" name="show" value="Detail View">
+            </form>
+          </td>
         </tr>
         <% } %>
         </table>
