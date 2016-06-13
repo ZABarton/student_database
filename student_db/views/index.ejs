@@ -8,31 +8,46 @@
     <header>
       <h1><%= title %></h1> 
     </header>
+    
+    <!-- search form -->
     <form action="/" method="POST">
       <h2>Filter Results</h2>
-      <label for="firstname">First Name</label>
-      <input type="text" placeholder="First Name" name="firstname">
-      <label for="lastname">Last Name</label>
-      <input type="text" placeholder="Last Name" name="lastname">
-      <input type="submit" name="search" value="Search">
+      <div id="inputs">
+        <label for="firstname">First Name</label>
+        <input type="text" placeholder="First Name" name="firstname">
+        <label for="lastname">Last Name</label>
+        <input type="text" placeholder="Last Name" name="lastname">
+        <input type="submit" name="search" value="Search">
+      </div>
     </form>
 
-    <ul class="students">
+    <!-- table view for results -->
+
       <% if (students) { %>
+        <table class="students">
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>GPA</th>
+          </tr>
         <% for(var i=0; i<students.length; i++) {%>
-        <li class="student">
-          <span><%= students[i].students.first %></span>
-          <span><%= students[i].students.last %></span>
-          <span><%= gpa(students[i].students.studentClasses) %></span>
-        </li>
+        <tr class="student">
+          <td><%= students[i].students.first %></td>
+          <td><%= students[i].students.last %></td>
+          <td><%= gpa(students[i].students.studentClasses) %></td>
+        </tr>
         <% } %>
+        </table>
       <% } else { %>
         <p>No student matches found</p>
       <% } %>
-    </ul>
+
     <nav>
       <a href='/'>Reset Filters</a>
     </nav>
+
+    <!-- function to calculate GPA -->
+
     <% function gpa(array){
       var grades = 0;
       for(var j=0; j<array.length; j++){
