@@ -5,26 +5,41 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1> 
+    <header>
+      <h1><%= title %></h1> 
+    </header>
     <form action="/" method="POST">
-      <label for="firstname">First Name
+      <h2>Filter Results</h2>
+      <label for="firstname">First Name</label>
       <input type="text" placeholder="First Name" name="firstname">
-      <label for="lastname">Last Name
+      <label for="lastname">Last Name</label>
       <input type="text" placeholder="Last Name" name="lastname">
       <input type="submit" name="search" value="Search">
     </form>
+
     <ul class="students">
       <% if (students) { %>
         <% for(var i=0; i<students.length; i++) {%>
         <li class="student">
           <span><%= students[i].students.first %></span>
           <span><%= students[i].students.last %></span>
+          <span><%= gpa(students[i].students.studentClasses) %></span>
         </li>
         <% } %>
       <% } else { %>
         <p>No student matches found</p>
       <% } %>
     </ul>
-
+    <nav>
+      <a href='/'>Reset Filters</a>
+    </nav>
+    <% function gpa(array){
+      var grades = 0;
+      for(var j=0; j<array.length; j++){
+        grades += array[j].grade;
+      }
+      var gpa = grades/array.length;
+      return gpa.toFixed(2)
+    } %>
   </body>
 </html>
