@@ -44,8 +44,6 @@ router.post('/', function(req, res, next) {
 	});
 });
 
-module.exports = router;
-
 router.get('/detail', function(req, res, next){
   console.log(req.query);
   var first = (req.query.first);
@@ -60,3 +58,5 @@ router.get('/detail', function(req, res, next){
   res.render('detail', { title: 'Detailed Student View', student: student });
   });
 });
+
+module.exports = router;

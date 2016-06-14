@@ -4,9 +4,42 @@
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
-  <header>
-  	<h1>Detailed View for <%=student[0].students.first %> <%=student[0].students.last %></h1>
-  </header>
   <body>
+  <header>
+  	<% var kid = student[0] %>
+  	<h1>Detailed View for <%=kid.students.first %> <%=kid.students.last %></h1>
+  </header>
+  <ul class="filter">
+  	<li><span class="bold">First Name:</span> <%=kid.students.first %></li>
+  	<li><span class="bold">Last Name:</span> <%=kid.students.last %></li>
+  	<li><span class="bold">Email:</span> <%=kid.students.email %></li>
+  	<li><span class="bold">Average GPA:</span> <%= gpa(kid.students.studentClasses) %></li>
+  </ul>
+  <table>
+  	<tr>
+  		<th>Class Name</td>
+  		<th>Grade</th>
+  <% for(var i=0; i<kid.students.studentClasses.length; i++) { %>
+  	<% var classId = parseInt(kid.students.studentClasses[i].id) %>
+  	<tr>
+  		<td><%= kid.classes[classId] %></td> 
+  		<td><%=kid.students.studentClasses[i].grade.toFixed(2) %></td>
+  	</tr>
+  	<% } %>
+  </table>
+  <nav>
+    <a href='/'>Back to Database</a>
+  </nav>
+
+    <% function gpa(array){
+      var grades = 0;
+      for(var j=0; j<array.length; j++){
+        grades += array[j].grade;
+      }
+      var gpa = grades/array.length;
+      return gpa.toFixed(2)
+    } %>
+
+
   </body>
 </html>
